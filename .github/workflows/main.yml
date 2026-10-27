@@ -1,0 +1,19 @@
+name: GLaDOS 自动签到
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # 每天后台自动运行一次
+  workflow_dispatch: # 允许你手动点击运行
+
+jobs:
+  checkin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 开始签到
+        env:
+          COOKIE: ${{ GLADOS_COOKIE }}
+        run: |
+          curl -X POST https://glados.network/api/user/checkin \
+          -H "cookie: $COOKIE" \
+          -H "content-type: application/json;charset=UTF-8" \
+          -d '{"token": "glados.network"}'
