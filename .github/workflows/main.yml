@@ -12,4 +12,5 @@ jobs:
       - name: Checkin
         env:
           COOKIE: ${{ secrets.COOKIE }}
-        run: curl -X POST https://glados.network/api/user/checkin -H "cookie: $COOKIE" -H "content-type: application/json;charset=UTF-8" -d '{"token": "glados.network"}'
+        run: |
+          curl -X POST https://glados.network/api/user/checkin -H "cookie: $COOKIE" -H "content-type: application/json;charset=UTF-8" -d '{"token": "glados.network"}'
