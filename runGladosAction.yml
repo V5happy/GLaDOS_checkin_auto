@@ -11,8 +11,10 @@ jobs:
     steps:
       - name: Checkin and Push
         env:
-          COOKIE: ${{ GLADOS_COOKIE }}
+          COOKIE: ${{ secrets.GLADOS_COOKIE }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
         run: |
+          echo "1. 正在执行 GLaDOS 签到..."
           curl -X POST https://glados.network/api/user/checkin -H "cookie: $COOKIE" -H "content-type: application/json;charset=UTF-8" -d '{"token": "glados.network"}'
-          curl -s "http://www.pushplus.plus/send?token=$PUSHPLUS_TOKEN&title=GLaDOS_Checkin&content=GitHub_Actions_每日签到已运行"
+          echo -e "\n\n2. 正在发送 PushPlus 微信通知..."
+          curl -X POST http://www.pushplus.plus/send -H "Content-Type: application/json" -d '{"token":"'"$PUSHPLUS_TOKEN"'","title":"GLaDOS签到通知","content":"GitHub_Actions 每日签到脚本已运行完毕。"}'
